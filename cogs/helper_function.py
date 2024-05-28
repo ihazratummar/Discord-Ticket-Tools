@@ -9,11 +9,14 @@ load_dotenv()
 
 async def send_log(title: str, guild: discord.Guild, description: str, color: discord.Color):
     log_channel = guild.get_channel(1244549170883330078)
+    t = time.localtime()
+    formatted_time = time.strftime("%y-%m-%d %H:%M:%S", t)
     embed = discord.Embed(
         title= title,
         description= description,
         color= color
     )
+    embed.add_field(name="Time", value=formatted_time)
     await log_channel.send(embed= embed)
 
 ##GET TRANSCRIPT

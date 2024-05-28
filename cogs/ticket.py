@@ -11,7 +11,7 @@ class CreateButton(View):
     def __init__(self):
         super().__init__(timeout=None)
 
-    @button(label="Create Ticket", style= discord.ButtonStyle.blurple, emoji="🎫", custom_id="ticketopen")
+    @button(label="Create Ticket", style= discord.ButtonStyle.blurple, emoji="🎟️", custom_id="ticketopen")
     async def ticket(self, interaction: discord.Interaction, button: Button):
         await interaction.response.defer(ephemeral=True)
         category : discord.CategoryChannel = discord.utils.get(interaction.guild.categories, id = 1244523604524273764)
@@ -49,7 +49,7 @@ class CreateButton(View):
                     )
         await helper_function.send_log(
             title= "Ticket Created",
-            description= "Created by {0}".format(interaction.user.mention),
+            description= "**Created by** {0}".format(interaction.user.mention),
             color= discord.Color.green(),
             guild=interaction.guild
         )
@@ -109,7 +109,7 @@ class CloseButton(View):
                 link = f"https://ihazratummar.github.io/ticket-transcript/tickets/{file_name}"
                 await helper_function.send_log(
                     title="Ticket Closed",
-                    description=f"Closed by: {interaction.user.mention}\n[Click for Transcript]({link})",
+                    description=f"**Closed by:** {interaction.user.mention}\n[Click for Transcript]({link})",
                     color=discord.Color.yellow(),
                     guild=interaction.guild
                 )
@@ -132,7 +132,7 @@ class Trushbutton(View):
 
         await helper_function.send_log(
             title= "Ticket Deleted",
-            description= f"Deleted by: {interaction.user.mention}, ticket: {interaction.channel.name}",
+            description= f"**Deleted by:** {interaction.user.mention},\n**Ticket Name:** {interaction.channel.name}",
             color= discord.Color.red(),
             guild=interaction.guild
         )
@@ -144,9 +144,12 @@ class Ticket(commands.Cog):
     @app_commands.command(name="ticket")
     @app_commands.checks.has_permissions(administrator = True)
     async def ticket(self, interaction: discord.Interaction):
-        embed = discord.Embed(title="Support Ticket",
-            description="Press the button to create a new ticket"
+        embed = discord.Embed(title="Create a Ticket to Contact Our Support Team",
+            description="To Create a Ticket React with 🎟️",
+            color= discord.Color.brand_green()
         )
+        
+        embed.set_author(name=f"{interaction.guild.name}")
         view = CreateButton()
         await interaction.response.send_message(embed= embed, view= view)
 
